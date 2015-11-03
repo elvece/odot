@@ -29,6 +29,16 @@ router.post('/todos', function(req, res, next){
   });
 });
 
+router.delete('/todo/:id', function(req, res, next){
+  var id = {"_id": req.params.id};
+  ToDo.findOneAndRemove(id, function(err, data){
+    if(err){
+      throw err;
+    } else {
+      res.json({Message: 'To do item removed.'});
+    }
+  });
+});
 
 
 module.exports = router;
