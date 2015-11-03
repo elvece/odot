@@ -43,7 +43,7 @@ mongoose.connect('mongodb://localhost/pana-todo');
 
 // *** main routes *** //
 app.use('/', routes);
-app.use('/api', routes);
+app.use('/api', api);
 
 
 // catch 404 and forward to error handler
