@@ -26,6 +26,36 @@ $('form').on('submit', function(e){
   });
 });
 
+//open edit modal and set field values
+$(document).on('click', '.edit-button', function(){
+  $('#message').hide();
+  $.get('/api/todo/'+$(this).attr('id'), function(data){
+    $('#edit-todo-title').val(data.title);
+    $('.save-changes').attr('id', data._id);
+  });
+});
+
+$(document).on('click', '.save-changes', function(){
+
+  var $updatedTitle = $('#edit-todo-title').val();
+
+  var payload = {
+    title: $updatedTitle
+  };
+
+  $.ajax({
+    method: 'PUT',
+    url: 'api/todo/'+$(this).attr('id'),
+    data: payload
+  })
+  .done(function(data){
+    $('#message').html(data.Message);
+    $('#all-todos').html("");
+    $('#message').show();
+    renderItems();
+  });
+});
+
 // *** HELPER FUNCTIONS ***//
 //GET - render all to do items
 function renderItems(){
