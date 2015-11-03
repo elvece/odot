@@ -8,7 +8,108 @@
   <div class="container">
 
     <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
+    <p> Add TO DO items using the following form:</p>
+
+    <br>
+
+    <form class="form-horizontal">
+<!--       <div class="form-group has-error has-feedback">
+        <label for="todo-title" class="col-sm-2 control-label">Name:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="todo-title" placeholder="Enter a to do item..." aria-describedby="inputError2Status" required>
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+          <span id="inputError2Status" class="sr-only">(error)</span>
+        </div>
+      </div> -->
+      <div class="form-group">
+        <label for="todo-title" class="col-sm-2 control-label">Title:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="todo-title" placeholder="Enter a to do item..." required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="completed" class="col-sm-2 control-label">Completed:</label>
+        <div class="col-sm-10">
+          <input type="checkbox" class="" id="completed" required>
+        </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-success">Save</button>
+        </div>
+      </div>
+    </form>
+
+    <hr><br>
+
+    <!-- Success alert -->
+    <div class="alert alert-success" role="alert" id="message"></div>
+
+    <!-- all todos table -->
+    <div id="todo-table">
+      <h2>All To Do's:</h2>
+        <div>
+          <table class="table table-hover table-responsive">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Completed</th>
+              </tr>
+            </thead>
+            <tbody id="all-todos">
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+    <!-- delete modal -->
+    <div id="delete-modal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Confirm Delete</h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete this to do item?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+            <button type="button" data-dismiss="modal" class="btn btn-danger yes-delete">Yes</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- edit modal -->
+    <div id="edit-modal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Edit To Do Item</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="todo-title" class="control-label">Title:</label>
+              <div class="">
+                <input type="text" class="form-control" id="edit-todo-title" placeholder="" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="completed" class="control-label">Completed:</label>
+              <div class="">
+                <input type="checkbox" class="" id="edit-completed" placeholder="" required>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel edit</button>
+            <button type="button" data-dismiss="modal" class="btn btn-primary save-changes">Save changes</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 
   </div>
 
