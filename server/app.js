@@ -1,3 +1,6 @@
+// *** database ***//
+require('./models/todo');
+
 // *** main dependencies *** //
 var express = require('express');
 var path = require('path');
@@ -6,6 +9,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
+var mongoose = require('mongoose');
 
 
 // *** routes *** //
@@ -34,6 +38,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
+//*** mongoose ***//
+mongoose.connect('mongodb://localhost/pana-todo');
 
 // *** main routes *** //
 app.use('/', routes);
