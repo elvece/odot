@@ -35,6 +35,7 @@ $(document).on('click', '.edit-button', function(){
   });
 });
 
+//PUT request  - updates one item in to do list
 $(document).on('click', '.save-changes', function(){
 
   var $updatedTitle = $('#edit-todo-title').val();
@@ -47,6 +48,28 @@ $(document).on('click', '.save-changes', function(){
     method: 'PUT',
     url: 'api/todo/'+$(this).attr('id'),
     data: payload
+  })
+  .done(function(data){
+    $('#message').html(data.Message);
+    $('#all-todos').html("");
+    $('#message').show();
+    renderItems();
+  });
+});
+
+//open delete modal and sets yes button attribute to to do id
+$(document).on('click', '.delete-button', function(){
+  $('#message').hide();
+  $.get('/api/todo/'+$(this).attr('id'), function(data){
+    $('.yes-delete').attr('id', data._id);
+  });
+});
+
+//DELETE - delete to do item from dom and db
+$(document).on('click', '.yes-delete', function(){
+  $.ajax({
+    method: 'DELETE',
+    url: 'api/todo/'+$(this).attr('id'),
   })
   .done(function(data){
     $('#message').html(data.Message);
