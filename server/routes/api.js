@@ -40,13 +40,10 @@ router.delete('/todo/:id', function(req, res, next){
   });
 });
 
+//why is title null when update completed
 router.put('/todo/:id', function(req, res, next){
   var id = {"_id": req.params.id};
-  var payload = {
-    title: req.body.title,
-    completed: req.body.completed,
-  };
-  ToDo.findOneAndUpdate(id, payload, function(err, data){
+  ToDo.findOneAndUpdate(id, req.body, function(err, data){
     if (err){
       throw err;
     } else {
