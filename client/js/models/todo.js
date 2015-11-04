@@ -1,23 +1,20 @@
 
-// var app = app || {};
-
 //to do model
 var todo = Backbone.Model.extend({
-  //ties in module js file
-  // moduleName: '{todo.js}',
-  // //sets mongo id as id attribute
-  // id: '_id',
+
   //Default to do item attribute values
   defaults: {
     title: '',
     completed: false
   },
+
   initialize: function(){
     console.log('model initalized');
     this.on('change:title', function(){
       console.log('title value for this model has changed.');
     });
   },
+
   setTitle: function(newTitle){
     this.set({ title: newTitle });
   }
