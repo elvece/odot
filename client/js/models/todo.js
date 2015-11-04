@@ -1,6 +1,6 @@
 // var app = app || {};
 
-//to do model
+//*** TO DO MODEL ***//
 var todo = Backbone.Model.extend({
 
   //Default to do item attribute values

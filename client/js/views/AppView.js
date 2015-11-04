@@ -1,5 +1,6 @@
 //Views in Backbone don’t contain the HTML markup for your application; they contain the logic behind the presentation of the model’s data to the user.
 
+//*** APP VIEW ***//
 var AppView = Backbone.View.extend({
   render: function(){
 

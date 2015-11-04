@@ -1,3 +1,5 @@
+
+//*** TO DO VIEW ***//
 var TodoView = Backbone.View.extend({
 
   //creates view element, defaults to div
