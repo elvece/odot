@@ -2,7 +2,6 @@
 
 $(document).on('ready', function() {
   renderItems();
-  $('#message').hide();
 });
 
 //POST - add new item to to do list
@@ -99,7 +98,7 @@ function renderItems(){
 
 //sets value of checkbox
  $('#completed').change(function(){
-     cb = $(this);
-     cb.val(cb.prop('checked'));
-     console.log($(this).val());
+   cb = $(this);
+   cb.val(cb.prop('checked'));
+   console.log($(this).val());
  });
