@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
+    <section id="todoapp">
+        <header id="header">
+          <h1>The Do'er</h1>
+          <input id="new-todo" placeholder="What do you need to do?" autofocus>
+        </header>
+        <section id="main">
+          <input id="toggle-all" type="checkbox">
+          <label for="toggle-all">Mark all as complete</label>
+          <ul id="todo-list"></ul>
+        </section>
+        <footer id="footer"></footer>
+    </section>
     <!-- Underscore.js microtemplate containing a placeholder for a to do item title and a completion checkbox which can be instantiated for to do item instance -->
     <script type="text/template" id="item-template">
       <div class="view">
@@ -16,12 +28,33 @@
       </div>
       <input class="edit" value="<%= title %>">
     </script>
+    <!-- stats templated used to populate data in the footer -->
+    <script type="text/template" id="stats-template">
+      //displays the number of remaining incomplete items
+      <span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
+      //router
+      <ul id="filters">
+        <li>
+          <a class="selected" href="#/">All</a>
+        </li>
+        <li>
+          <a href="#/active">Active</a>
+        </li>
+        <li>
+          <a href="#/completed">Completed</a>
+        </li>
+      </ul>
+      // clears all completed items
+      <% if (completed) { %>
+      <button id="clear-completed">Clear completed (<%= completed %>)</button>
+      <% } %>
+    </script>
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
     <script src="js/models/todo.js"></script>
-    <script src="js/collections/todos.js"></script>
+    <!--<script src="js/collections/todos.js"></script>-->
     <script src="js/views/AppView.js"></script>
     <script src="js/views/TodoView.js"></script>
     <!--<script src="js/app.js"></script>-->

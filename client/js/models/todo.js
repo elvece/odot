@@ -1,3 +1,4 @@
+// var app = app || {};
 
 //to do model
 var todo = Backbone.Model.extend({
@@ -7,23 +8,25 @@ var todo = Backbone.Model.extend({
     title: '',
     completed: false
   },
-
+  //run when model is initalized
   initialize: function(){
     console.log('model initalized');
+    //change event associated with title
     this.on('change:title', function(){
       console.log('title value for this model has changed.');
     });
   },
-
+  //a way to set a new title property of a to do item instance
   setTitle: function(newTitle){
     this.set({ title: newTitle });
+  },
+
+  toggle: function(){
+    //save completed status after gettting value
+    this.save({
+      completed: !this.get('completed')
+    });
   }
-  // toggle: function(){
-  //   //save completed status after gettting value
-  //   this.save({
-  //     completed: !this.get('completed')
-  //   });
-  // }
 });
 
 //*** PRACTICE TESTING ***//
