@@ -30,7 +30,7 @@ router.get('/todo/:id', function(req, res, next) {
 router.post('/todos', function(req, res, next){
   var newToDo = new ToDo({
     title: req.body.title,
-    completed: false
+    completed: false,
   });
 
   newToDo.save(function(err, data){

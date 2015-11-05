@@ -1,14 +1,24 @@
+var app = app || {};
 
-//router for to do items
-
-//creating workspace for router
 var Workspace = Backbone.Router.extend({
-  routes: {},
-  moduleName: '{router.js}',
-  // initalize:
+  //*splat = set up a default route which passes the string after ‘#/’ in the url to setFilter() which sets app.TodoFilter to that string
+  routes:{
+    '*filter': 'setFilter'
+  },
+
+  setFilter: function(param) {
+    //set the current filter to be used
+    if (param) {
+      param = param.trim();
+    }
+    app.TodoFilter = param || '';
+
+    //trigger a collection filter event, causing hiding/unhiding of TodoView items
+    app.Todos.trigger('filter');
+  }
 });
 
-//initalize router
-app.todoRouter = newWorkspace();
-//start router
+//create an instance of router
+app.TodoRouter = new Workspace();
+//routes the initial url during page load
 Backbone.history.start();
