@@ -9,6 +9,10 @@ app.todo = Backbone.Model.extend({
     title: '',
     completed: false
   },
+
+  //corresponds to mongo id so backbone can recognize id as unique identifier
+  idAttribute: '_id',
+
   //run when model is initalized
   initialize: function(){
     console.log('model initalized');
@@ -17,11 +21,13 @@ app.todo = Backbone.Model.extend({
       console.log('title value for this model has changed.');
     });
   },
+
   //a way to set a new title property of a to do item instance
   setTitle: function(newTitle){
     this.set({title: newTitle});
   },
 
+  //toggles completed status
   toggle: function(){
     //save completed status after gettting value
     this.save({

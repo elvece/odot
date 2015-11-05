@@ -23,12 +23,17 @@ app.AppView = Backbone.View.extend({
   },
 
   //on initialization, bind to the relevant events on the todos in collection and listen for add or change events
-  initialize: function(options) {
+  initialize: function() {
+    this.collection = app.Todos;
+    this.collection.fetch({reset: true});
     //binds a function to an object so that anytime the function is called the value of this will be the object
     // this.model.bind('change', _.bind(this.render, this));
     // this.$el = $('#todo');
     //to access passed options in your view
     // this.options = options || {};
+
+    this.listenTo(this.collection, 'add', this.renderBook);
+    this.listenTo(this.collection, 'reset', this.render);
 
     //this.$() finds elements relative to this.$el
     this.allCheckbox = this.$('#toggle-all')[0];
@@ -36,25 +41,25 @@ app.AppView = Backbone.View.extend({
     this.$footer = this.$('#footer');
     this.$main = this.$('#main');
 
-    this.listenTo(app.Todos, 'add', this.addOne);
-    this.listenTo(app.Todos, 'reset', this.addAll);
+    this.listenTo(this.collection, 'add', this.addOne);
+    this.listenTo(this.collection, 'reset', this.addAll);
 
-    this.listenTo(app.Todos, 'change:completed', this.filterOne);
-    this.listenTo(app.Todos,'filter', this.filterAll);
+    this.listenTo(this.collection, 'change:completed', this.filterOne);
+    this.listenTo(this.collection,'filter', this.filterAll);
     //binds any event triggered on the todos collection to render method
-    this.listenTo(app.Todos, 'all', this.render);
+    this.listenTo(this.collection, 'all', this.render);
 
     //fetches previously saved todos from local storage
-    app.Todos.fetch();
+    this.collection.fetch();
   },
 
   //refresh stats
   //since method bound to all events on the Todos collection, stats in the footer are updated
   render: function() {
-    var completed = app.Todos.completed().length;
-    var remaining = app.Todos.remaining().length;
+    var completed = this.collection.completed().length;
+    var remaining = this.collection.remaining().length;
 
-    if (app.Todos.length) {
+    if (this.collection.length) {
       //display depending on if todos exist
       this.$main.show();
       this.$footer.show();
@@ -69,7 +74,7 @@ app.AppView = Backbone.View.extend({
       this.$('#filters li a')
         .removeClass('selected')
         //todoFilter is set by router and applies the selected class to the link corresponding to the currently selected filter
-        .filter('[href="#/' + (TodoFilter || '' ) + '"]')
+        .filter('[href="#/' + (app.TodoFilter || '' ) + '"]')
         .addClass('selected');
     } else {
       this.$main.hide();
@@ -90,7 +95,7 @@ app.AppView = Backbone.View.extend({
   addAll: function() {
     this.$('#todo-list').html('');
     //calling this correctly?
-    app.Todos.each(this.addOne, this);
+    this.collection.each(this.addOne, this);
   },
 
   //callback on the todos collection for a change:completed event
@@ -102,14 +107,14 @@ app.AppView = Backbone.View.extend({
   //callback to filter event
   //toggle which todo items are visible based on the filter currently selected (all, completed or remaining) by calling filterOne()
   filterAll: function () {
-    app.Todos.each(this.filterOne, this);
+    this.collection.each(this.filterOne, this);
   },
 
   //generates  attributes for a new to do item
   newAttributes: function() {
     return {
       title: this.$input.val().trim(),
-      order: app.Todos.nextOrder(),
+      order: this.collection.nextOrder(),
       completed: false
     };
   },
@@ -121,21 +126,21 @@ app.AppView = Backbone.View.extend({
     }
     //populates model, which returns an object of item attributes
     //this is view, not DOM since callback was bound using events hash
-    app.Todos.create(this.newAttributes());
+    this.collection.create(this.newAttributes());
     //resets input field
     this.$input.val('');
   },
 
   //removes the items in the todo list that have been marked as completed and destroys their models
   clearCompleted: function() {
-    _.invoke(app.Todos.completed(), 'destroy');
+    _.invoke(this.collection.completed(), 'destroy');
     return false;
   },
 
   //marks all of the items in the todo list as completed by clicking the toggle-all checkbox
   toggleAllComplete: function() {
     var completed = this.allCheckbox.checked;
-    app.Todos.each(function(todo) {
+    this.collection.each(function(todo) {
       todo.save({
         'completed': completed
       });

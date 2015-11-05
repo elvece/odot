@@ -4,13 +4,16 @@ var app = app || {};
 //*** TO DO COLLECTION - all to do items ***//
 
 //to start, data will persist on local storage so I can acheive an MVP
-var TodoList = Backbone.Collection.extend({
+app.TodoList = Backbone.Collection.extend({
 
   //reference to this collection's model
   model: app.todo,
 
+  //url of api endpoint
+  url: '/api/todos',
+
   //save all of the to do items in local storage
-  localStorage: new Backbone.LocalStorage('todos-backbone'),
+  // localStorage: new Backbone.LocalStorage('todos-backbone'),
 
   //filters down the list of all to do items that are completed
   completed: function() {
@@ -43,4 +46,4 @@ var TodoList = Backbone.Collection.extend({
 });
 
 //creates global collection of all to do items
-app.Todos = new TodoList();
+app.Todos = new app.TodoList();
