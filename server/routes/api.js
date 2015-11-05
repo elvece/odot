@@ -15,7 +15,7 @@ router.get('/todos', function(req, res, next) {
 });
 
 //get SINGLE to do item
-router.get('/todo/:id', function(req, res, next) {
+router.get('/todos/:id', function(req, res, next) {
   id = {"_id": req.params.id};
   ToDo.findOne(id, function (err, data){
     if (err){
@@ -43,7 +43,7 @@ router.post('/todos', function(req, res, next){
 });
 
 //DELETE to do item
-router.delete('/todo/:id', function(req, res, next){
+router.delete('/todos/:id', function(req, res, next){
   var id = {"_id": req.params.id};
   ToDo.findOneAndRemove(id, function(err, data){
     if(err){
@@ -55,7 +55,7 @@ router.delete('/todo/:id', function(req, res, next){
 });
 
 //UPDATE to do item
-router.put('/todo/:id', function(req, res, next){
+router.put('/todos/:id', function(req, res, next){
   var id = {"_id": req.params.id};
   ToDo.findOneAndUpdate(id, req.body, function(err, data){
     if (err){
