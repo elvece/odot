@@ -1,7 +1,8 @@
-// var app = app || {};
+
+var app = app || {};
 
 //*** TO DO MODEL ***//
-var todo = Backbone.Model.extend({
+app.todo = Backbone.Model.extend({
 
   //Default to do item attribute values
   defaults: {

@@ -2,9 +2,11 @@
 
 //handles the creation of new todos and rendering of the initial todo list
 
+var app = app || {};
+
 //*** APP VIEW ***//
 //top level piece of UI
-var AppView = Backbone.View.extend({
+app.AppView = Backbone.View.extend({
 
   //bind to the existing skeleton of the app already present in the html rather than generating a new element
   el: '#todoapp',
@@ -34,24 +36,24 @@ var AppView = Backbone.View.extend({
     this.$footer = this.$('#footer');
     this.$main = this.$('#main');
 
-    this.listenTo(allToDos, 'add', this.addOne);
-    this.listenTo(allToDos, 'reset', this.addAll);
+    this.listenTo(app.Todos, 'add', this.addOne);
+    this.listenTo(app.Todos, 'reset', this.addAll);
 
-    this.listenTo(allToDos, 'change:completed', this.filterOne);
-    this.listenTo(allToDos,'filter', this.filterAll);
+    this.listenTo(app.Todos, 'change:completed', this.filterOne);
+    this.listenTo(app.Todos,'filter', this.filterAll);
     //binds any event triggered on the todos collection to render method
-    this.listenTo(allToDos, 'all', this.render);
+    this.listenTo(app.Todos, 'all', this.render);
 
     //fetches previously saved todos from local storage
-    allToDos.fetch();
+    app.Todos.fetch();
   },
 
   //refresh stats
   render: function() {
-    var completed = allToDos.completed().length;
-    var remaining = allToDos.remaining().length;
+    var completed = app.Todos.completed().length;
+    var remaining = app.Todos.remaining().length;
 
-    if (allToDos.length) {
+    if (app.Todos.length) {
       //display depending on if todos exist
       this.$main.show();
       this.$footer.show();
@@ -77,8 +79,8 @@ var AppView = Backbone.View.extend({
   },
 
   //add a single todo item to the list by creating a view for it and appending it to the list
-  addOne: function( todo ) {
-    var view = new TodoView({ model: todo });
+  addOne: function(todo) {
+    var view = new app.TodoView({model: todo});
     $('#todo-list').append(view.render().el);
   },
 
@@ -87,7 +89,7 @@ var AppView = Backbone.View.extend({
   addAll: function() {
     this.$('#todo-list').html('');
     //calling this correctly?
-    allToDos.each(this.addOne, this);
+    app.Todos.each(this.addOne, this);
   },
 
   //callback on the todos collection for a change:completed event
@@ -99,14 +101,14 @@ var AppView = Backbone.View.extend({
   //callback to filter event
   //toggle which todo items are visible based on the filter currently selected (all, completed or remaining) by calling filterOne()
   filterAll: function () {
-    allToDos.each(this.filterOne, this);
+    app.Todos.each(this.filterOne, this);
   },
 
   //generates  attributes for a new to do item
   newAttributes: function() {
     return {
       title: this.$input.val().trim(),
-      order: allToDos.nextOrder(),
+      order: app.Todos.nextOrder(),
       completed: false
     };
   },
@@ -118,21 +120,21 @@ var AppView = Backbone.View.extend({
     }
     //populates model, which returns an object of item attributes
     //this is view, not DOM since callback was bound using events hash
-    allToDos.create(this.newAttributes());
+    app.Todos.create(this.newAttributes());
     //resets input field
     this.$input.val('');
   },
 
   //removes the items in the todo list that have been marked as completed and destroys their models
   clearCompleted: function() {
-    _.invoke(allToDos.completed(), 'destroy');
+    _.invoke(app.Todos.completed(), 'destroy');
     return false;
   },
 
   //marks all of the items in the todo list as completed by clicking the toggle-all checkbox
   toggleAllComplete: function() {
     var completed = this.allCheckbox.checked;
-    allToDos.each(function(todo) {
+    app.Todos.each(function(todo) {
       todo.save({
         'completed': completed
       });

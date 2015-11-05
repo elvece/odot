@@ -1,8 +1,10 @@
 //instances of this view will be associated with each individual to do record
 //todo instances can handle editing, updating, and destroying their associated todo.
 
+var app = app || {};
+
 //*** TO DO VIEW ***//
-var TodoView = Backbone.View.extend({
+app.TodoView = Backbone.View.extend({
 
   //creates view element, defaults to div
   tagName: 'li',

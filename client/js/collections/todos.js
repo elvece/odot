@@ -1,5 +1,5 @@
 
-// var app = app || {};
+var app = app || {};
 
 //*** TO DO COLLECTION - all to do items ***//
 
@@ -7,7 +7,7 @@
 var TodoList = Backbone.Collection.extend({
 
   //reference to this collection's model
-  model: todo,
+  model: app.todo,
 
   //save all of the to do items in local storage
   localStorage: new Backbone.LocalStorage('todos-backbone'),
@@ -43,4 +43,4 @@ var TodoList = Backbone.Collection.extend({
 });
 
 //creates global collection of all to do items
-var allToDos = new TodoList();
+app.Todos = new TodoList();
