@@ -49,6 +49,7 @@ app.AppView = Backbone.View.extend({
   },
 
   //refresh stats
+  //since method bound to all events on the Todos collection, stats in the footer are updated
   render: function() {
     var completed = app.Todos.completed().length;
     var remaining = app.Todos.remaining().length;
