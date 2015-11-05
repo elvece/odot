@@ -15,9 +15,7 @@
         <section id="main">
           <input id="toggle-all" type="checkbox">
           <label for="toggle-all">Mark all as complete</label>
-          <ul id="todo-list">
-<!--             <li><% _.each( keywords, function( keyobj ) {%> <%= keyobj.keyword %><% } ); %></li> -->
-          </ul>
+          <ul id="todo-list"></ul>
         </section>
         <footer id="footer"></footer>
     </section>
@@ -31,10 +29,11 @@
       <input class="edit" value="<%= title %>">
     </script>
     <!-- stats templated used to populate data in the footer -->
+    <!-- displays the number of remaining incomplete items -->
+    <!-- ul ties to route-->
+    <!-- if statement clears all completed values -->
     <script type="text/template" id="stats-template">
-      //displays the number of remaining incomplete items
       <span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
-      //router
       <ul id="filters">
         <li>
           <a class="selected" href="#/">All</a>
@@ -46,7 +45,6 @@
           <a href="#/completed">Completed</a>
         </li>
       </ul>
-      // clears all completed items
       <% if (completed) { %>
       <button id="clear-completed">Clear completed (<%= completed %>)</button>
       <% } %>
