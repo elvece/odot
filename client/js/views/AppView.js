@@ -22,19 +22,15 @@ app.AppView = Backbone.View.extend({
     'click #toggle-all': 'toggleAllComplete'
   },
 
-  //on initialization, bind to the relevant events on the todos in collection and listen for add or change events
+  //on initialization, create new todoList bind to the relevant events on the todos in collection and listen for add or change events
   initialize: function() {
-    this.collection = app.Todos;
-    this.collection.fetch({reset: true});
-    //binds a function to an object so that anytime the function is called the value of this will be the object
-    // this.model.bind('change', _.bind(this.render, this));
-    // this.$el = $('#todo');
     //to access passed options in your view
     // this.options = options || {};
-
+    this.collection = app.Todos;
+    //when e fetch complates, reset event id fired, since the models are fetched asynchronously after the page is rendered
+    this.collection.fetch({reset: true});
     this.listenTo(this.collection, 'add', this.renderBook);
     this.listenTo(this.collection, 'reset', this.render);
-
     //this.$() finds elements relative to this.$el
     this.allCheckbox = this.$('#toggle-all')[0];
     this.$input = this.$('#new-todo');
@@ -48,9 +44,6 @@ app.AppView = Backbone.View.extend({
     this.listenTo(this.collection,'filter', this.filterAll);
     //binds any event triggered on the todos collection to render method
     this.listenTo(this.collection, 'all', this.render);
-
-    //fetches previously saved todos from local storage
-    this.collection.fetch();
   },
 
   //refresh stats
@@ -93,8 +86,9 @@ app.AppView = Backbone.View.extend({
   //add all items in the to do list collection
   //can use this to refer to the view because listenTo() implicitly set the callback’s context to the view when it created the binding
   addAll: function() {
+    //clears to do list
     this.$('#todo-list').html('');
-    //calling this correctly?
+    //filter todo item list
     this.collection.each(this.addOne, this);
   },
 
@@ -137,7 +131,7 @@ app.AppView = Backbone.View.extend({
     return false;
   },
 
-  //marks all of the items in the todo list as completed by clicking the toggle-all checkbox
+  //marks all of the items in the todo list as completed by clicking the toggle-all checkbox (true or false value)
   toggleAllComplete: function() {
     var completed = this.allCheckbox.checked;
     this.collection.each(function(todo) {

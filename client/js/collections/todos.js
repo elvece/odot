@@ -18,7 +18,7 @@ app.TodoList = Backbone.Collection.extend({
   //filters down the list of all to do items that are completed
   completed: function() {
     //filter is underscore method
-    return this.filter(function( todo ) {
+    return this.filter(function(todo) {
       //gets attribute completed's boolean value
       return todo.get('completed');
     });
@@ -27,12 +27,12 @@ app.TodoList = Backbone.Collection.extend({
   //filter list to only to do items that are incomplete
   remaining: function() {
     //without is underscore method
-    return this.without.apply( this, this.completed() );
+    return this.without.apply(this, this.completed());
   },
 
   //generates the next order number for new items so to dos are in sequential order
   nextOrder: function() {
-    if ( !this.length ) {
+    if (!this.length) {
       return 1;
     }
     //last is underscore method

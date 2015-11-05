@@ -15,10 +15,10 @@ app.todo = Backbone.Model.extend({
 
   //run when model is initalized
   initialize: function(){
-    console.log('model initalized');
+    // console.log('model initalized');
     //change event associated with title
     this.on('change:title', function(){
-      console.log('title value for this model has changed.');
+      // console.log('title value for this model has changed.');
     });
   },
 
