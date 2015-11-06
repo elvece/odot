@@ -39,7 +39,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
 //*** mongoose ***//
-mongoose.connect('mongodb://localhost/pana-todo');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/pana-todo');
 
 // *** main routes *** //
 app.use('/', routes);
