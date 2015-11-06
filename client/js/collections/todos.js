@@ -10,27 +10,21 @@ app.TodoList = Backbone.Collection.extend({
 
   //filters down the list of all to do items that are completed
   completed: function() {
-    return this.filter(function(todo) {
-      return todo.get('completed');
-    });
+    return this.where({completed: true});
   },
 
   //filter list to only to do items that are incomplete
   remaining: function() {
-    return this.without.apply(this, this.completed());
+    return this.where({completed: false});
   },
 
   //generates the next order number for new items so to dos are in sequential order
   nextOrder: function() {
-    if (!this.length) {
-      return 1;
-    }
-    return this.last().get('order') + 1;
+    return this.length ? this.last().get('order') + 1 : 1;
   },
 
-  comparator: function( todo ) {
-    return todo.get('order');
-  }
+  comparator: 'order'
+
 });
 
 //global collection

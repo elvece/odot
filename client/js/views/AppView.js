@@ -6,22 +6,22 @@ var app = app || {};
 
 app.AppView = Backbone.View.extend({
 
-  el: '#todoapp',
+  el: '.todoapp',
 
-  statsTemplate: _.template($('#stats-template').html()),
+  statsTemplate: _.template($('.stats-template').html()),
 
   events: {
-    'keypress #new-todo': 'createOnEnter',
-    'click #clear-completed': 'clearCompleted',
-    'click #toggle-all': 'toggleAllComplete'
+    'keypress .new-todo': 'createOnEnter',
+    'click .clear-completed': 'clearCompleted',
+    'click .toggle-all': 'toggleAllComplete'
   },
 
   initialize: function() {
 
-    this.allCheckbox = this.$('#toggle-all')[0];
-    this.$input = this.$('#new-todo');
-    this.$footer = this.$('#footer');
-    this.$main = this.$('#main');
+    this.allCheckbox = this.$('.toggle-all')[0];
+    this.$input = this.$('.new-todo');
+    this.$footer = this.$('.footer');
+    this.$main = this.$('.main');
 
     this.collection = app.Todos;
 
@@ -56,7 +56,7 @@ app.AppView = Backbone.View.extend({
         remaining: remaining
       }));
 
-      this.$('#filters li a')
+      this.$('.filters li a')
         .removeClass('selected')
         //TodoFilter is set by router
         .filter('[href="#/' + (app.TodoFilter || '' ) + '"]')
@@ -71,12 +71,12 @@ app.AppView = Backbone.View.extend({
   //add a single todo item to the list by creating a view for it
   addOne: function(todo) {
     var view = new app.TodoView({model: todo});
-    $('#todo-list').append(view.render().el);
+    $('.todo-list').append(view.render().el);
   },
 
   //add all items in the to do list collection
   addAll: function() {
-    this.$('#todo-list').html('');
+    this.$('.todo-list').html('');
     this.collection.each(this.addOne, this);
   },
 

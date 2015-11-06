@@ -9,7 +9,7 @@ app.TodoView = Backbone.View.extend({
 
   tagName: 'li',
 
-  todoTemplate: _.template($('#item-template').html()),
+  todoTemplate: _.template($('.item-template').html()),
 
   events: {
     'click input.toggle': 'toggleCompleted',
@@ -46,10 +46,9 @@ app.TodoView = Backbone.View.extend({
 
   //determines if item should be hidden and updates accordingly
   isHidden: function () {
-    var isCompleted = this.model.get('completed');
-    return ( // hidden cases only
-      (!isCompleted && app.TodoFilter === 'completed') || (isCompleted && app.TodoFilter === 'active')
-    );
+    return this.model.get('completed') ?
+      app.TodoFilter === 'active' :
+      app.TodoFilter === 'completed';
   },
 
   //toggles the completed state of the model

@@ -9,20 +9,20 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
-    <section id="todoapp">
-        <header id="header">
+    <section class="todoapp">
+        <header class="header">
           <h1>odot</h1>
-          <input id="new-todo" placeholder="What do you need to do?" autofocus>
+          <input class="new-todo" placeholder="What do you need to do?" autofocus>
         </header>
-        <section id="main">
-          <input id="toggle-all" type="checkbox">
+        <section class="main">
+          <input class="toggle-all" type="checkbox">
           <label for="toggle-all">Mark all as complete</label>
-          <ul id="todo-list"></ul>
+          <ul class="todo-list"></ul>
         </section>
-        <footer id="footer"></footer>
+        <footer class="footer"></footer>
     </section>
     <!-- Underscore.js microtemplate containing a placeholder for a to do item title and a completion checkbox which can be instantiated for to do item instance -->
-    <script type="text/template" id="item-template">
+    <script type="text/template" class="item-template">
       <div class="view">
         <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
         <label><%= title %></label>
@@ -31,9 +31,9 @@
       <input class="edit" value="<%= title %>">
     </script>
     <!-- stats templated used to populate data in the footer -->
-    <script type="text/template" id="stats-template">
-      <span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
-      <ul id="filters">
+    <script type="text/template" class="stats-template">
+      <span class="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
+      <ul class="filters">
         <li>
           <a class="selected" href="#/">All</a>
         </li>
@@ -45,7 +45,7 @@
         </li>
       </ul>
       <% if (completed) { %>
-      <button id="clear-completed">clear completed [<%= completed %>]</button>
+      <button class="clear-completed">clear completed [<%= completed %>]</button>
       <% } %>
     </script>
     <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
