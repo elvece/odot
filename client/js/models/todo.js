@@ -12,15 +12,6 @@ app.todo = Backbone.Model.extend({
   //corresponds to mongo id so backbone can recognize id as unique identifier
   idAttribute: '_id',
 
-  initialize: function(){
-    this.on('change:title', function(){
-    });
-  },
-
-  setTitle: function(newTitle){
-    this.set({title: newTitle});
-  },
-
   toggle: function(){
     this.save({
       //sets to opposite
