@@ -6,4 +6,4 @@ This is my second iteration of this project (first iteration used jQuery to test
 
 My next step is to refactor this into Marionette.js and use PostgreSQL.
 
-Check out the app on [heroku].(https://odot-todo.herokuapp.com/)
+Check out the app on [heroku](https://odot-todo.herokuapp.com/).
