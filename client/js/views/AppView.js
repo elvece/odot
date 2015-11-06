@@ -18,14 +18,14 @@ app.AppView = Backbone.View.extend({
 
   initialize: function() {
 
-    this.collection = app.Todos;
-
-    this.collection.fetch({reset: true});
-
     this.allCheckbox = this.$('#toggle-all')[0];
     this.$input = this.$('#new-todo');
     this.$footer = this.$('#footer');
     this.$main = this.$('#main');
+
+    this.collection = app.Todos;
+
+    this.collection.fetch({reset: true});
 
     this.listenTo(this.collection, 'add', this.addOne);
 
@@ -37,6 +37,8 @@ app.AppView = Backbone.View.extend({
     this.listenTo(this.collection, 'change:completed', this.filterOne);
 
     this.listenTo(this.collection,'filter', this.filterAll);
+
+    this.listenTo(this.collection, 'all', _.debounce(this.render, 0));
   },
 
   //refresh stats - does not affect TodoView
