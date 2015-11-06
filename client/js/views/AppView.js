@@ -68,7 +68,7 @@ app.AppView = Backbone.View.extend({
       }));
 
       this.$('#filters li a')
-        // .removeClass('selected')
+        .removeClass('selected')
         //todoFilter is set by router and applies the selected class to the link corresponding to the currently selected filter
         .filter('[href="#/' + (app.TodoFilter || '' ) + '"]')
         .addClass('selected');
