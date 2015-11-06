@@ -29,8 +29,7 @@ app.AppView = Backbone.View.extend({
     this.collection = app.Todos;
     //when e fetch complates, reset event id fired, since the models are fetched asynchronously after the page is rendered
     this.collection.fetch({reset: true});
-    this.listenTo(this.collection, 'add', this.renderBook);
-    this.listenTo(this.collection, 'reset', this.render);
+
     //this.$() finds elements relative to this.$el
     this.allCheckbox = this.$('#toggle-all')[0];
     this.$input = this.$('#new-todo');
@@ -38,17 +37,21 @@ app.AppView = Backbone.View.extend({
     this.$main = this.$('#main');
 
     this.listenTo(this.collection, 'add', this.addOne);
-    this.listenTo(this.collection, 'reset', this.addAll);
+
+    this.listenTo(this.collection, 'reset change', function(){
+        this.addAll();
+        this.render();
+      });
 
     this.listenTo(this.collection, 'change:completed', this.filterOne);
+
     this.listenTo(this.collection,'filter', this.filterAll);
-    //binds any event triggered on the todos collection to render method
-    this.listenTo(this.collection, 'all', this.render);
   },
 
   //refresh stats
   //since method bound to all events on the Todos collection, stats in the footer are updated
   render: function() {
+
     var completed = this.collection.completed().length;
     var remaining = this.collection.remaining().length;
 
@@ -65,7 +68,7 @@ app.AppView = Backbone.View.extend({
       }));
 
       this.$('#filters li a')
-        .removeClass('selected')
+        // .removeClass('selected')
         //todoFilter is set by router and applies the selected class to the link corresponding to the currently selected filter
         .filter('[href="#/' + (app.TodoFilter || '' ) + '"]')
         .addClass('selected');

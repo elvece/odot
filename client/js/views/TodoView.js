@@ -5,11 +5,9 @@ var app = app || {};
 
 //*** TO DO VIEW ***//
 app.TodoView = Backbone.View.extend({
-
   //creates view element, defaults to div
   tagName: 'li',
   //sets class name of this element
-  className: '',
 
   //cache the template function for a single item
   todoTemplate: _.template($('#item-template').html()),
@@ -17,7 +15,7 @@ app.TodoView = Backbone.View.extend({
   //DOM events specific to an item
   //jQuery’s .delegate() underneath - don’t have to worry about whether a particular element has been rendered to the DOM yet or not
   events: {
-    'click .toggle': 'toggleCompleted',
+    'click input.toggle': 'toggleCompleted',
     'dblclick label': 'edit',
     'keypress .edit': 'updateOnEnter',
     'click .destroy': 'clear',
@@ -27,32 +25,27 @@ app.TodoView = Backbone.View.extend({
   //TodoView listens for changes to its model, then re-renders
   //because 1-1 correspondence between a todo and a a ToDoView, direct reference on the model is set
   initialize: function(options) {
-    //binds a function to an object so that anytime the function is called the value of this will be the object
-    // this.model.bind('change', _.bind(this.render, this));
-    // this.$el = $('#todo');
-    //to access passed options in your view
-    // this.options = options || {};
 
     this.listenTo(this.model, 'change', this.render);
-    this.listenTo(this.model, 'destroy', this.remove);
+    // this.listenTo(this.model, 'destroy', this.remove);
     this.listenTo(this.model, 'visible', this.toggleVisible);
   },
 
   //render defines the logic for rendering a template
   //renders to do item titles
   render: function() {
-    //$el = reference to jQuery object
-    //todoTemplate = ref to underscore template
-    //replaces html of dom element with the instantiated template containing the model's attributes
+    //replaces html of dom element with template
     this.$el.html(this.todoTemplate(this.model.attributes));
 
     //toggles the completed class on the element depending on the model’s completed state
     this.$el.toggleClass('completed', this.model.get('completed'));
+
     this.toggleVisible();
 
     //caching the input element within the instantiated template
     this.$input = this.$('.edit');
     //convention to return this, as it makes views reusable in parent views and renders all elements once the entire list is populated
+
     return this;
   },
 
@@ -70,10 +63,9 @@ app.TodoView = Backbone.View.extend({
   },
 
   //toggles the completed state of the model
-  togglecompleted: function() {
+  toggleCompleted: function() {
     this.model.toggle();
   },
-
 
   //activated when todo label is double clicked
   edit: function() {
@@ -85,6 +77,8 @@ app.TodoView = Backbone.View.extend({
 
   //closes editing mode, saves model changes
   close: function() {
+    this.$('#some-element')
+    $('#some-element')
     //changed value
     var value = this.$input.val().trim();
     //if there is a value
