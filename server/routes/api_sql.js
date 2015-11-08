@@ -14,7 +14,7 @@ router.post('/todos', function(req, res){
   pg.connect(connectionString, function(err, client, done) {
     if (err){
       done();
-      console.log(err);
+      // console.log(err);
       return res.status(500).json({success: false, data: err});
     }
 
@@ -33,6 +33,26 @@ router.post('/todos', function(req, res){
   });
 });
 
+router.get('/todos', function(req, res){
+  var results = [];
+  pg.connect(connectionString, function(err, client, done){
+    if (err){
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
 
+    var query = client.query('SELECT * FROM items ORDER BY id ASC;');
+
+    query.on('row', function(row){
+      results.push(row);
+    });
+
+    query.on('end', function(){
+      done();
+      return res.json(results);
+    });
+  });
+});
 
 module.exports = router;
