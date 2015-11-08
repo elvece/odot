@@ -11,6 +11,7 @@ router.get('/', function(req, res, next) {
 router.post('/todos', function(req, res){
   var results = [];
   var data = {title: req.body.title, completed: false};
+
   pg.connect(connectionString, function(err, client, done) {
     if (err){
       done();
@@ -53,6 +54,35 @@ router.get('/todos', function(req, res){
       return res.json(results);
     });
   });
+});
+
+
+router.put('/todos/:id', function(req, res) {
+  var results = [];
+  var id = req.params.id;
+  var data = {title: req.body.title, completed: req.body.completed};
+
+  pg.connect(connectionString, function(err, client, done) {
+      if(err) {
+        done();
+        console.log(err);
+        return res.status(500).send(json({ success: false, data: err}));
+      }
+
+      client.query("UPDATE items SET title=($1), completed=($2) WHERE id=($3)", [data.title, data.completed, id]);
+
+      var query = client.query("SELECT * FROM items ORDER BY id ASC");
+
+      query.on('row', function(row) {
+          results.push(row);
+      });
+
+      query.on('end', function() {
+          done();
+          return res.json(results);
+      });
+  });
+
 });
 
 module.exports = router;
