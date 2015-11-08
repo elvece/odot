@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+// var express = require('express');
+// var router = express.Router();
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Simple To Do' });
-});
+// router.get('/', function(req, res, next) {
+//   res.render('index', { title: 'Simple To Do' });
+// });
 
-module.exports = router;
+// module.exports = router;

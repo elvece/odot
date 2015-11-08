@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 
 
 // *** routes *** //
-var routes = require('./routes/index.js');
+// var routes = require('./routes/index.js');
 var api = require('./routes/api.js');
 
 
