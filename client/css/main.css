@@ -32,7 +32,7 @@ button, input[type="checkbox"] {
   display: none;
 }
 
-.todoapp {
+.app-style {
   background: #fff;
   margin: 130px 0 40px 0;
   position: relative;
@@ -40,14 +40,14 @@ button, input[type="checkbox"] {
 }
 
 
-.todoapp input::-webkit-input-placeholder {
+.app-style input::-webkit-input-placeholder {
   font-style: italic;
   font-weight: 300;
   color: #e6e6e6;
 }
 
 
-.todoapp h1 {
+.app-style h1 {
   position: absolute;
   top: -155px;
   width: 100%;
@@ -64,7 +64,7 @@ button, input[type="checkbox"] {
   border-radius: inherit;
 }
 
-.new-todo,
+.new-todo-style,
 .edit {
   position: relative;
   margin: 0;
@@ -82,7 +82,7 @@ button, input[type="checkbox"] {
 
 }
 
-.new-todo {
+.new-todo-style {
   padding: 16px 16px 16px 60px;
   border: none;
   background: rgba(0, 0, 0, 0.003);
@@ -99,7 +99,7 @@ label[for='toggle-all'] {
   display: none;
 }
 
-.toggle-all {
+.toggle-all-style {
   position: absolute;
   top: -55px;
   left: -12px;
@@ -111,14 +111,14 @@ label[for='toggle-all'] {
   -webkit-appearance: none;
 }
 
-.toggle-all:before {
+.toggle-all-style:before {
   content: "❯";
   font-size: 22px;
   color: rgb(230, 230, 230);
   padding: 10px 27px;
 }
 
-.toggle-all:checked:before {
+.toggle-all-style:checked:before {
   color: darkseagreen;
 }
 
@@ -247,12 +247,12 @@ label[for='toggle-all'] {
 }
 
 
-.todo-count {
+.todo-count-style {
   float: left;
   text-align: left;
 }
 
-.filters {
+.filter-style {
   padding: 0;
   position: absolute;
   right: 0;
@@ -260,11 +260,11 @@ label[for='toggle-all'] {
   text-transform: uppercase;
 }
 
-.filters li {
+.filter-style li {
   display: inline;
 }
 
-.filters li a {
+.filter-style li a {
   color: inherit;
   margin: 3px;
   padding: 3px 7px;
@@ -273,11 +273,11 @@ label[for='toggle-all'] {
   border-radius: 3px;
 }
 
-.filters li a.selected {
+.filter-style li a.selected {
   border-color: gainsboro;
 }
 
-.clear-completed {
+.clear-completed-style {
   float: right;
   position: relative;
   background: rgba(0, 0, 0, 0.05);
@@ -287,7 +287,7 @@ label[for='toggle-all'] {
   border-radius: 3px;
 }
 
-.clear-completed:hover {
+.clear-completed-style:hover {
   background: rgba(0, 0, 0, 0.15);
   box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.3);
 }

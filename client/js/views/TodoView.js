@@ -9,7 +9,7 @@ app.TodoView = Backbone.View.extend({
 
   tagName: 'li',
 
-  todoTemplate: _.template($('.item-template').html()),
+  todoTemplate: _.template($('#item-template').html()),
 
   events: {
     'click input.toggle': 'toggleCompleted',

@@ -10,7 +10,7 @@ app.todo = Backbone.Model.extend({
   },
 
   //corresponds to mongo id so backbone can recognize id as unique identifier
-  idAttribute: '_id',
+  // idAttribute: '_id',
 
   toggle: function(){
     this.save({

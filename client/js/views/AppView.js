@@ -6,20 +6,20 @@ var app = app || {};
 
 app.AppView = Backbone.View.extend({
 
-  el: '.todoapp',
+  el: '#todoapp',
 
-  statsTemplate: _.template($('.stats-template').html()),
+  statsTemplate: _.template($('#stats-template').html()),
 
   events: {
-    'keypress .new-todo': 'createOnEnter',
-    'click .clear-completed': 'clearCompleted',
-    'click .toggle-all': 'toggleAllComplete'
+    'keypress #new-todo': 'createOnEnter',
+    'click #clear-completed': 'clearCompleted',
+    'click #toggle-all': 'toggleAllComplete'
   },
 
   initialize: function() {
 
-    this.allCheckbox = this.$('.toggle-all')[0];
-    this.$input = this.$('.new-todo');
+    this.allCheckbox = this.$('#toggle-all')[0];
+    this.$input = this.$('#new-todo');
     this.$footer = this.$('.footer');
     this.$main = this.$('.main');
 
@@ -56,7 +56,7 @@ app.AppView = Backbone.View.extend({
         remaining: remaining
       }));
 
-      this.$('.filters li a')
+      this.$('#filters li a')
         .removeClass('selected')
         //TodoFilter is set by router
         .filter('[href="#/' + (app.TodoFilter || '' ) + '"]')

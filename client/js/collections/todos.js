@@ -24,6 +24,9 @@ app.TodoList = Backbone.Collection.extend({
   },
 
   comparator: 'order'
+  // comparator: function(todo){
+  //   return todo.get('order')
+  // }
 
 });
 
