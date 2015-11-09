@@ -25,7 +25,7 @@ app.AppView = Backbone.View.extend({
 
     this.collection = app.Todos;
 
-    this.collection.fetch({reset: true});
+    this.collection.fetch();
 
     this.listenTo(this.collection, 'add', this.addOne);
 
@@ -77,7 +77,10 @@ app.AppView = Backbone.View.extend({
   //add all items in the to do list collection
   addAll: function() {
     this.$('.todo-list').html('');
-    this.collection.each(this.addOne, this);
+    var that = this;
+    this.collection.each(function (todo) {
+      that.addOne(todo);
+    });
   },
 
   //triggers on changes to the completed model attribute
@@ -104,7 +107,9 @@ app.AppView = Backbone.View.extend({
     if (event.which !== ENTER_KEY || !this.$input.val().trim()) {
       return;
     }
-    this.collection.create(this.newAttributes());
+    var newTodo = new app.todo();
+    newTodo.save(this.newAttributes());
+    this.collection.push(newTodo);
     this.$input.val('');
   },
 
