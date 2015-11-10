@@ -3,7 +3,7 @@ var app = app || {};
 //*** TO DO MODEL ***//
 
 app.todo = Backbone.Model.extend({
-  urlRoot: 'api/todos',
+  urlRoot: '/api/todos',
 
   defaults: {
     title: '',
