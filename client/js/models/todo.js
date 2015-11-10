@@ -13,6 +13,8 @@ app.todo = Backbone.Model.extend({
   //   }
   // },
 
+  urlRoot: '/api/todos',
+
   defaults: {
     title: '',
     completed: false

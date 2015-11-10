@@ -105,7 +105,9 @@ app.AppView = Backbone.View.extend({
     if (event.which !== ENTER_KEY || !this.$input.val().trim()) {
       return;
     }
+    console.log(this.newAttributes())
     this.collection.create(this.newAttributes());
+    console.log(this.collection)
     // console.log('create on enter', this)
     this.$input.val('');
   },
