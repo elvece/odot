@@ -71,7 +71,7 @@ app.AppView = Backbone.View.extend({
   //add a single todo item to the list by creating a view for it
   addOne: function(todo) {
     var view = new app.TodoView({model: todo});
-    console.log('add one new to do view', view)
+    // console.log('add one new to do view', view)
     $('.todo-list').append(view.render().el);
   },
 
@@ -93,11 +93,6 @@ app.AppView = Backbone.View.extend({
 
   //generates attributes for a new to do item
   newAttributes: function() {
-    console.log('new attr',{
-      title: this.$input.val().trim(),
-      order: this.collection.nextOrder(),
-      completed: false
-    });
     return {
       title: this.$input.val().trim(),
       order: this.collection.nextOrder(),
@@ -111,7 +106,7 @@ app.AppView = Backbone.View.extend({
       return;
     }
     this.collection.create(this.newAttributes());
-    console.log('create on enter', this)
+    // console.log('create on enter', this)
     this.$input.val('');
   },
 

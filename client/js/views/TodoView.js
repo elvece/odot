@@ -37,7 +37,7 @@ app.TodoView = Backbone.View.extend({
 
     this.$input = this.$('.edit');
 
-    console.log('to do view render', this)
+    // console.log('to do view render', this)
     return this;
   },
 
@@ -61,7 +61,7 @@ app.TodoView = Backbone.View.extend({
   //activated when todo label is double clicked
   edit: function() {
     this.$el.addClass('editing');
-    console.log('editing')
+    // console.log('editing')
     this.$input.focus();
   },
 
@@ -69,8 +69,9 @@ app.TodoView = Backbone.View.extend({
   close: function() {
     var value = this.$input.val().trim();
     if (value) {
-      console.log('close', this.model)
-      this.model.save({title: value});
+      if (!this.model.isNew()){
+        this.model.save({title: value});
+      }
     } else {
         this.clear();
       }
@@ -79,17 +80,17 @@ app.TodoView = Backbone.View.extend({
 
   //checks if enter key press
   updateOnEnter: function(event) {
-    console.log('fire')
+    // console.log('fire')
     if (event.which === ENTER_KEY) {
       //closes edit input
-      console.log('close on enter update')
+      // console.log('close on enter update')
       this.close();
     }
   },
 
   //remove the item, destroy the model and delete its view
   clear: function() {
-    console.log('clear')
+    // console.log('clear')
     this.model.destroy();
   }
 });

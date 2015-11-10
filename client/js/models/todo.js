@@ -4,6 +4,15 @@ var app = app || {};
 
 app.todo = Backbone.Model.extend({
 
+  // url: function() {
+  //   var base = "/api/todos/";
+  //   if(this.isNew()) {
+  //     return base;
+  //   } else {
+  //     return base + this.get("_id");
+  //   }
+  // },
+
   defaults: {
     title: '',
     completed: false
