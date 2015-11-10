@@ -12,8 +12,7 @@ var mongoose = require('mongoose');
 
 
 // *** routes *** //
-// var routes = require('./routes/index.js');
-var api = require('./routes/api_sql.js');
+var api = require('./routes/api.js');
 
 
 // *** express instance *** //
@@ -37,8 +36,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
-//*** mongoose ***//
-// mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/pana-todo');
 
 // *** main routes *** //
 app.use('/', api);

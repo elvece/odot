@@ -1,70 +1,115 @@
-// var express = require('express');
-// var router = express.Router();
-// var mongoose = require('mongoose');
-// var ToDo = mongoose.model('todo');
+var express = require('express');
+var router = express.Router();
+var path = require('path');
+var pg = require('pg');
+var connectionString = require(path.join(__dirname, '../', '../', 'config'));
 
-// //get ALL to do items
-// router.get('/todos', function(req, res, next) {
-//   ToDo.find(function(err, data){
-//     if(err){
-//       throw err;
-//     } else {
-//       res.json(data);
-//     }
-//   });
-// });
+router.get('/', function(req, res, next) {
+  res.sendFile(path.join(__dirname, '../', '../', 'client', 'index.html'));
+});
 
-// //get SINGLE to do item
-// router.get('/todos/:id', function(req, res, next) {
-//   id = {"_id": req.params.id};
-//   ToDo.findOne(id, function (err, data){
-//     if (err){
-//       throw err;
-//     } else {
-//     res.json(data);
-//     }
-//   });
-// });
+router.post('/todos', function(req, res){
+  var results = [];
+  var data = {title: req.body.title, completed: false};
 
-// //ADD new to do item
-// router.post('/todos', function(req, res, next){
-//   var newToDo = new ToDo({
-//     title: req.body.title,
-//     completed: false,
-//   });
+  pg.connect(connectionString, function(err, client, done) {
+    if (err){
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
 
-//   newToDo.save(function(err, data){
-//     if (err){
-//       throw err;
-//     } else {
-//       res.json({Message:'To do item saved!'});
-//     }
-//   });
-// });
+    client.query("INSERT INTO items(title, completed) values($1, $2)", [data.title, data.completed]);
 
-// //DELETE to do item
-// router.delete('/todos/:id', function(req, res, next){
-//   var id = {"_id": req.params.id};
-//   ToDo.findOneAndRemove(id, function(err, data){
-//     if(err){
-//       throw err;
-//     } else {
-//       res.json({Message: 'To do item removed.'});
-//     }
-//   });
-// });
+    var query = client.query("SELECT * FROM items ORDER BY id ASC");
 
-// //UPDATE to do item
-// router.put('/todos/:id', function(req, res, next){
-//   var id = {"_id": req.params.id};
-//   ToDo.findOneAndUpdate(id, req.body, function(err, data){
-//     if (err){
-//       throw err;
-//     } else {
-//       res.json({Message: 'To do item updated.'});
-//     }
-//   });
-// });
+    query.on('row', function(row) {
+      results.push(row);
+    });
+    query.on('end', function() {
+      done();
+      console.log(results)
+      return res.json(results);
+    });
+  });
+});
+
+router.get('/todos', function(req, res){
+  var results = [];
+  pg.connect(connectionString, function(err, client, done){
+    if (err){
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+
+    var query = client.query('SELECT * FROM items ORDER BY id ASC;');
+
+    query.on('row', function(row){
+      results.push(row);
+    });
+
+    query.on('end', function(){
+      done();
+      return res.json(results);
+    });
+  });
+});
 
 
-// module.exports = router;
+router.put('/todos/:id', function(req, res) {
+  var results = [];
+  var id = req.params.id;
+  var data = {title: req.body.title, completed: req.body.completed};
+
+  pg.connect(connectionString, function(err, client, done) {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).send(json({ success: false, data: err}));
+    }
+
+    client.query("UPDATE items SET title=($1), completed=($2) WHERE id=($3)", [data.title, data.completed, id]);
+
+    var query = client.query("SELECT * FROM items ORDER BY id ASC");
+
+    query.on('row', function(row) {
+      results.push(row);
+    });
+
+    query.on('end', function() {
+      done();
+      return res.json(results);
+    });
+  });
+});
+
+
+router.delete('/todos/:id', function(req, res) {
+
+  var results = [];
+  var id = req.params.id;
+
+  pg.connect(connectionString, function(err, client, done) {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({ success: false, data: err});
+    }
+
+    client.query("DELETE FROM items WHERE id=($1)", [id]);
+
+    var query = client.query("SELECT * FROM items ORDER BY id ASC");
+
+    query.on('row', function(row) {
+      results.push(row);
+    });
+
+    query.on('end', function() {
+      done();
+      return res.json(results);
+    });
+  });
+});
+
+module.exports = router;

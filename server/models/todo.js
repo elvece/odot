@@ -1,10 +1,8 @@
-// var mongoose = require('mongoose');
-// var Schema = mongoose.Schema;
+var pg = require('pg');
+var path = require('path');
+var connectionString = require(path.join(__dirname, '../', '../', 'config'));
 
-// var ToDo = new Schema ({
-//   title: String,
-//   completed: Boolean,
-//   created: {type : Date, default: Date.now}
-// });
-
-// module.exports = mongoose.model('todo', ToDo);
+var client = new pg.Client(connectionString);
+client.connect();
+var query = client.query('CREATE TABLE items(id SERIAL PRIMARY KEY, title VARCHAR(40) not null, completed BOOLEAN)');
+query.on('end', function() { client.end(); });
