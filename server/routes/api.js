@@ -37,7 +37,6 @@ router.post('/todos', function(req, res, next){
     if (err){
       throw err;
     } else {
-      // console.log('post', data)
       res.json(data);
     }
   });
@@ -62,7 +61,6 @@ router.put('/todos/:id', function(req, res, next){
     if (err){
       throw err;
     } else {
-      // console.log('put', data)
       res.json(data);
     }
   });
