@@ -1,5 +1,3 @@
-//instances of this view will be associated with each individual to do record
-//todo instances can handle editing, updating, and destroying their associated todo.
 
 var app = app || {};
 
@@ -30,14 +28,13 @@ app.TodoView = Backbone.View.extend({
   render: function() {
 
     this.$el.html(this.template(this.model.attributes));
-    // this.$el.html(this.template(this.model.toJSON()));
+
     this.$el.toggleClass('completed', this.model.get('completed'));
 
     this.toggleVisible();
 
     this.$input = this.$('.edit');
 
-    // console.log('to do view render', this)
     return this;
   },
 
@@ -61,44 +58,29 @@ app.TodoView = Backbone.View.extend({
   //activated when todo label is double clicked
   edit: function() {
     this.$el.addClass('editing');
-    // console.log('editing')
     this.$input.focus();
   },
 
   //closes editing mode, saves model changes
   close: function() {
     var value = this.$input.val().trim();
-    console.log(this.$input.val().trim())
-    // !this.model.isNew()
-    // if (value) {
-    //   this.model.fetch()
-    //   console.log(this.model)
-    //   this.model.save({title: value});
-    // } else {
-    //     // this.input.val(this.model.get('title'))
-    //     this.clear();
-    //   }
-    console.log(this.model)
-    this.model.fetch();
-        console.log(this.model)
-
-    this.model.save();
+    if (value) {
+      this.model.save({title: value});
+    } else {
+        this.clear();
+      }
     this.$el.removeClass('editing');
   },
 
   //checks if enter key press
   updateOnEnter: function(event) {
-    // console.log('fire')
     if (event.which === ENTER_KEY) {
-      //closes edit input
-      // console.log('close on enter update')
       this.close();
     }
   },
 
   //remove the item, destroy the model and delete its view
   clear: function() {
-    // console.log('clear')
     this.model.destroy();
   }
 });
