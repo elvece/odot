@@ -37,6 +37,7 @@ router.post('/todos', function(req, res, next){
     if (err){
       throw err;
     } else {
+      // console.log('post', data)
       res.json({Message:'To do item saved!'});
     }
   });
@@ -61,6 +62,7 @@ router.put('/todos/:id', function(req, res, next){
     if (err){
       throw err;
     } else {
+      // console.log('put', data)
       res.json({Message: 'To do item updated.'});
     }
   });
