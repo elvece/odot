@@ -19,7 +19,7 @@ router.post('/todos', function(req, res){
       return res.status(500).json({success: false, data: err});
     }
 
-    //returning everything, just return the one item
+    //returning everything, need to just return the one item
     client.query("INSERT INTO items(title, completed) values($1, $2)", [data.title, data.completed]);
 
     var query = client.query("SELECT * FROM items ORDER BY id ASC");
