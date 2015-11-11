@@ -1,7 +1,20 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
-    email: DataTypes.STRING
+    email: {
+      type: DataTypes.STRING,
+      required: true,
+      allowNull: false,
+      validation: {
+        isEmail: true
+      }
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+      required: true,
+    }
   }, {
     classMethods: {
       associate: function(models) {
@@ -10,4 +23,4 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
   return User;
-}
+};
