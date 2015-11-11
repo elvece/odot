@@ -1,8 +1,14 @@
-var pg = require('pg');
-var path = require('path');
-var connectionString = require(path.join(__dirname, '../', '../', 'config'));
-
-var client = new pg.Client(connectionString);
-client.connect();
-var query = client.query('CREATE TABLE items(id SERIAL PRIMARY KEY, title VARCHAR(40) not null, completed BOOLEAN)');
-query.on('end', function() { client.end(); });
+'use strict';
+module.exports = function(sequelize, DataTypes) {
+  var Todo = sequelize.define('Todo', {
+    title: DataTypes.STRING,
+    complete: DataTypes.BOOLEAN
+  }, {
+    classMethods: {
+      associate: function(models) {
+        Todo.belongsTo(models.User);
+      }
+    }
+  });
+  return Todo;
+};
