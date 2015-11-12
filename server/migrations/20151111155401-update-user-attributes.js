@@ -1,58 +1,29 @@
 'use strict';
-//down should match up from previous migration, new up adds new schema info
+//down should match up from previous migration, new up adds new schema info - only whatever column you ar changing
+
+//RESEARCH: how would you update a column vs add column, can you add more than one (chain migration updates?)
 module.exports = {
   up: function (queryInterface, Sequelize) {
-   return queryInterface.createTable('Users', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      email: {
-        type: Sequelize.STRING,
-        required: true,
-        allowNull: false,
-        validation: {
-          isEmail: true
-        }
-      },
+   return queryInterface.addColumn('Users', 'admin', {
+
+      // email: {
+      //   type: Sequelize.STRING,
+      //   required: true,
+      //   allowNull: false,
+      //   validation: {
+      //     isEmail: true
+      //   }
+
       admin: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false,
         required: true,
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },
 
   down: function (queryInterface, Sequelize) {
-    return queryInterface.createTable('Users', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      email: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    });
+    return queryInterface.removeColumn('Users', 'admin');
   }
 };
